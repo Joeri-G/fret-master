@@ -1,5 +1,5 @@
 {
-  "name": "electride",
+  "name": "fret-master",
   "version": "1.0.0",
   "description": "A quick-start package for React and Electron development",
   "main": "public/main.js",
@@ -59,8 +59,5 @@
     "directories": {
       "buildResources": "assets"
     }
-  },
-  "bugs": {
-    "url": "https://github.com/Joeri-G/electride/issues"
   }
 }
