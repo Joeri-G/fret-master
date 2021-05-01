@@ -1,0 +1,64 @@
+{
+  "name": "electride",
+  "version": "1.0.0",
+  "description": "A quick-start package for React and Electron development",
+  "main": "public/main.js",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "web-vitals": "^1.1.1"
+  },
+  "homepage": "./",
+  "devDependencies": {
+    "electron": "^12.0.5",
+    "electron-builder": "^22.10.5",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "start": "./start.sh",
+    "react-start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "electron-start": "NODE_ENV=development electron .",
+    "preelectron-pack": "npm run build",
+    "electron-pack": "build --win --macos -c.extraMetadata.main=build/Main.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "author": "Joeri-G",
+  "license": "AGPL-3.0-or-later",
+  "build": {
+    "appId": "nonExistentID",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/Joeri-G/electride/issues"
+  }
+}

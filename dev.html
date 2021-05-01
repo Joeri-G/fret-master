@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Starting dev server</title>
+    <style media="screen">
+      html, body {
+        margin: 0;
+        font-size: 16px;
+        font-family: "Arial", sans-serif;
+        background: #fff;
+        color: #000;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      main {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>It looks like the react dev server is still starting...</h1>
+      <p>Your app is running in dev mode and everything is being set up.</p>
+    </main>
+    <script type="text/javascript">
+    // get SERVER_URL from URL
+    const QUERY_STRING = window.location.search;
+    const URL_PARAMS = new URLSearchParams(QUERY_STRING);
+
+    const MAX_ATTEMPTS = 10
+    const SERVER_URL = URL_PARAMS.get("SERVER_URL")
+    const PING_TIMEOUT = 1000
+
+    console.log(window.location);
+
+    var attempts = 0
+
+    function checkServer(url, timeout) {
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const options = { mode: 'no-cors', signal };
+      return fetch(url, options)
+        .then(setTimeout(() => { controller.abort() }, timeout))
+        .then(response => {
+          console.log("Server online");
+          clearInterval(checkInterval)
+          window.location = SERVER_URL
+        })
+        .catch(error => {
+          attempts++;
+          if (attempts > MAX_ATTEMPTS) {
+            clearInterval(checkInterval)
+            alert("It looks like the React dev server has not started correctly as it has not yet been reached")
+          }
+        })
+      }
+      var checkInterval = setInterval(() => {
+        checkServer(SERVER_URL, PING_TIMEOUT)
+      }, PING_TIMEOUT + 1000)
+    </script>
+  </body>
+</html>
