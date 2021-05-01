@@ -1,0 +1,46 @@
+.StartScreen {
+  margin: 0;
+  padding: 2em;
+  display: block;
+  height: 100vh;
+  width: 100vw;
+  background: rgb(222, 251, 255);
+  display: block;
+}
+
+.StartScreen .backButton {
+  padding: 1em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 1em;
+  left: 1em;
+}
+
+.StartScreen .backButton:hover,
+.StartScreen .backButton:focus {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.StartScreen .gameList {
+  width: 600px;
+  margin: 0 auto;
+  padding: 2em;
+  background: rgb(255, 226, 222)
+}
+
+.StartScreen .gameList button {
+  background: none;
+  border: none;
+  width: 100%;
+  display: block;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 1em;
+}
+
+.StartScreen .gameList button:hover,
+.StartScreen .gameList button:focus {
+  background: rgba(0, 0, 0, 0.2);
+}
