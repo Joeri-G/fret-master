@@ -20,6 +20,8 @@
   },
   "scripts": {
     "start": "./start.sh",
+    "start-linux": "./start.sh",
+    "start-windows": ".\\start.bat",
     "react-start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
