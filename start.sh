@@ -4,7 +4,7 @@
 echo "This is spawning two separate processes. One for the electron window and one for the React dev server."
 echo "When the package is built (\"npm run electron-pack\") they are combined into one"
 
-# make sure the electron process is started in development mode so that it tries to react the react server instead of a build
+# make sure the electron process is started in development mode so that it tries to reach the react server instead of a build
 react-scripts start & NODE_ENV=development electron . & fg
 
 # do some cleanup if the processes didn't exit correctly
