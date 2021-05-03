@@ -1,0 +1,55 @@
+.fretboard {
+  margin: 2em auto;
+}
+
+.fretboard .fret {
+  background: rgb(69, 35, 33);
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 0.125em #000;
+}
+
+.fretboard .strings {}
+
+.fretboard .noteSelector {
+  display: block;
+  height: 2em;
+  width: 2em;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: rgb(69, 53, 33);
+  border-radius: 24px;
+  border: 2px solid #000;
+  cursor: pointer;
+}
+
+.fretboard .noteSelector.selected {
+  background: rgb(33, 67, 69);
+}
+
+.fretboard .strings {
+  z-index: 2;
+}
+
+/* Fret markers */
+.fretboard .fret:nth-of-type(3)::before,
+.fretboard .fret:nth-of-type(5)::before,
+.fretboard .fret:nth-of-type(7)::before,
+.fretboard .fret:nth-of-type(9)::before,
+.fretboard .fret:nth-of-type(12n)::before,
+.fretboard .fret:nth-of-type(15)::before,
+.fretboard .fret:nth-of-type(17)::before,
+.fretboard .fret:nth-of-type(19)::before {
+  position: absolute;
+  content: '';
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 24px;
+  background: #fff;
+  border: 2px solid #000;
+}
+
+.fretboard .fret:nth-of-type(12n)::before {
+  background: #000;
+}
