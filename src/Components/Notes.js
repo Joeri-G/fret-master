@@ -6,7 +6,13 @@ export default class Notes extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fretboardComponent: <Fretboard frets={21} strings={6} tuning={["E2", "A2", "D3", "G3", "B3", "E4"]} boardWidth={1400} />
+      fretboardComponent: <Fretboard
+                            frets={21}
+                            strings={6}
+                            tuning={["E2", "A2", "D3", "G3", "B3", "E4"]}
+                            boardWidth={1400}
+                            nutWidth={64}
+                          />
     }
   }
 

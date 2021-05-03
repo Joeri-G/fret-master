@@ -2,7 +2,8 @@
   margin: 2em auto;
 }
 
-.fretboard .fret {
+.fretboard .fret,
+.fretboard .nut {
   background: rgb(69, 35, 33);
   display: inline-flex;
   justify-content: center;
@@ -52,4 +53,8 @@
 
 .fretboard .fret:nth-of-type(12n)::before {
   background: #000;
+}
+
+.fretboard .nut {
+  background: #213145
 }

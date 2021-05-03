@@ -5,34 +5,77 @@ export default class Fretboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedFrets: this.getUpdatedFretList()
+      selectedFrets: this.getUpdatedFretList(),
+      frets: this.props.frets,
+      strings: this.props.strings,
+      tuning: this.props.tuning
     }
   }
 
+  /*
+    is a derived state absolutely neccesarry?
+    Well, if the neck were to change the grid of fret selections would not
+    update which could cause some annoying bugs.
+    An alternative would be to contruct a new component everytime the
+    stringcount, fretcount or tuing were to change, but that would be annoying.
+  */
+  static getDerivedStateFromProps(props, state) {
+    const comps = ["frets", "strings", "tuning"]
+    for (const c of comps) {
+      if (state[c] !== props[c]) {
+        return {
+          /*
+            since this is a static method we cannot reference "this"
+            and call this.getUpdatedFretList, so I copypasted the function
+          */
+          selectedFrets: new Array(props.strings).fill(new Array(props.frets + 1).fill(false)),
+          frets: props.frets,
+          strings: props.strings,
+          tuning: props.tuning
+        }
+      }
+    }
+    return null
+  }
+
+  makeArray(n, d=false) {
+    return Array(n).fill(d);
+  }
 
   getUpdatedFretList() {
-    // update the list of selected frets in the state
-    // create an array of X indexes and fill it with another array of Y indexes
-    // x => strings
-    // y => frets + 1 for open strings
-    return new Array(this.props.strings).fill(new Array(this.props.frets + 1).fill(false))
+    /*
+      update the list of selected frets in the state
+      create an array of X indexes and fill it with another array of Y indexes
+      x => strings
+      y => frets + 1 for open strings
+    */
+    return Array.from({length: this.props.strings}, e => this.makeArray(this.props.frets + 1))
   }
 
-  toggleNote(fretXY) {
-    console.log(fretXY);
+  toggleNote(string, fret) {
+    let updateSelectedFrets = this.state.selectedFrets
+    updateSelectedFrets[string][fret] = !updateSelectedFrets[string][fret]
+    this.setState({selectedFrets: updateSelectedFrets})
   }
 
-  noteSwitch(fretXY, k) {
-    return <span className="noteSelector" onClick={() => this.toggleNote(fretXY)} key={k}></span>
+  noteSwitch(string, fret, k) {
+    return <span className={(this.state.selectedFrets[string][fret] === true) ? "noteSelector selected" : "noteSelector"} onClick={() => this.toggleNote(string, fret)} key={k}></span>
   }
 
   generateNeck() {
     const intervals = this.getWidth()
-    return intervals.map((interval, i) => <div className="fret" key={i} style={{width: `${interval}px`}}>
-      <div className="strings">
-        {Array.from({ length: this.props.strings }, (_, k) => this.noteSwitch([i, k], k))}
-      </div>
-    </div>)
+    return <React.Fragment>
+      {this.generateNut()}
+      {intervals.map((interval, i) => <div className="fret" key={i} style={{width: `${interval}px`}}>
+        {this.generateStringButtons(i+1)}
+      </div>)}
+    </React.Fragment>
+  }
+
+  generateStringButtons(fret) {
+    return <div className="strings">
+      {Array.from({ length: this.props.strings }, (_, k) => this.noteSwitch(k, fret, k))}
+    </div>
   }
 
   distanceFromBridge(s, n) {
@@ -44,8 +87,9 @@ export default class Fretboard extends Component {
   }
 
   getWidth() {
-    // https://en.wikipedia.org/wiki/12_equal_temperament
     /*
+      https://en.wikipedia.org/wiki/12_equal_temperament
+
       D(s, n) = s / ((2**(1/12))**n)  // distance from nut
       W(s, n) = D(s, n) - D(s, n+1)   // width of frets
 
@@ -64,10 +108,12 @@ export default class Fretboard extends Component {
 
   generateNut() {
     // TODO: ADD AN OPTION TO PLAY OPEN STRINGS
-    return null
+    return <div className="nut" style={{width: `${this.props.nutWidth}px`}}>
+      {this.generateStringButtons(0)}
+    </div>
   }
 
   render() {
-    return <div className="fretboard">{this.generateNut()}{this.generateNeck()}</div>
+    return <div className="fretboard">{this.generateNeck()}</div>
   }
 }
