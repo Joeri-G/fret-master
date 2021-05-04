@@ -56,6 +56,8 @@ export default class Fretboard extends Component {
     let updateSelectedFrets = this.state.selectedFrets
     updateSelectedFrets[string][fret] = !updateSelectedFrets[string][fret]
     this.setState({selectedFrets: updateSelectedFrets})
+    // fire onFretboardUpdate event
+    this.props.onFretboardUpdate(updateSelectedFrets)
   }
 
   noteSwitch(string, fret, k) {
