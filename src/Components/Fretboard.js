@@ -5,7 +5,7 @@ export default class Fretboard extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selectedFrets: this.getUpdatedFretList(),
+      selectedFrets: this.makeUpdatedFretList(),
       frets: this.props.frets,
       strings: this.props.strings,
       tuning: this.props.tuning
@@ -26,7 +26,7 @@ export default class Fretboard extends Component {
         return {
           /*
             since this is a static method we cannot reference "this"
-            and call this.getUpdatedFretList, so I copypasted the function
+            and call this.makeUpdatedFretList, so I copypasted the function
           */
           selectedFrets: new Array(props.strings).fill(new Array(props.frets + 1).fill(false)),
           frets: props.frets,
@@ -42,7 +42,7 @@ export default class Fretboard extends Component {
     return Array(n).fill(d);
   }
 
-  getUpdatedFretList() {
+  makeUpdatedFretList() {
     /*
       update the list of selected frets in the state
       create an array of X indexes and fill it with another array of Y indexes
@@ -63,7 +63,7 @@ export default class Fretboard extends Component {
   }
 
   generateNeck() {
-    const intervals = this.getWidth()
+    const intervals = this.calcWidth()
     return <React.Fragment>
       {this.generateNut()}
       {intervals.map((interval, i) => <div className="fret" key={i} style={{width: `${interval}px`}}>
@@ -86,7 +86,7 @@ export default class Fretboard extends Component {
     return this.distanceFromBridge(s, n) - this.distanceFromBridge(s, n + 1);
   }
 
-  getWidth() {
+  calcWidth() {
     /*
       https://en.wikipedia.org/wiki/12_equal_temperament
 
