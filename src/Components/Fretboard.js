@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import './css/Fretboard.css'
 
 export default class Fretboard extends Component {
@@ -39,7 +39,7 @@ export default class Fretboard extends Component {
   }
 
   makeArray(n, d=false) {
-    return Array(n).fill(d);
+    return Array(n).fill(d)
   }
 
   makeUpdatedFretList() {
@@ -85,7 +85,7 @@ export default class Fretboard extends Component {
   }
 
   fretWidth(s, n) {
-    return this.distanceFromBridge(s, n) - this.distanceFromBridge(s, n + 1);
+    return this.distanceFromBridge(s, n) - this.distanceFromBridge(s, n + 1)
   }
 
   calcWidth() {
@@ -103,19 +103,26 @@ export default class Fretboard extends Component {
     const scaleLength = this.props.scaleLength ||  this.props.boardWidth / (2**(-(this.props.frets)/12) -1) * -1
     let widths = []
     for (var i = 0; i < this.props.frets; i++) {
-      widths.push(Math.floor(this.fretWidth(scaleLength, i)));
+      widths.push(Math.floor(this.fretWidth(scaleLength, i)))
     }
-    return widths;
+    return widths
   }
 
   generateNut() {
-    // TODO: ADD AN OPTION TO PLAY OPEN STRINGS
     return <div className="nut" style={{width: `${this.props.nutWidth}px`}}>
       {this.generateStringButtons(0)}
     </div>
   }
 
   render() {
-    return <div className="fretboard">{this.generateNeck()}</div>
+    if (!this.props.scaleLength) {
+      var intervals = this.calcWidth()
+      const minFretWidth = 32
+      for (var i = 0; i < intervals.length; i++) {
+        if (intervals[i] < minFretWidth) { intervals[i] = 32 }
+      }
+      var fretboardWidth = intervals.reduce((val, curr) => val+curr) + this.props.nutWidth
+    }
+    return <div className="fretboard" style={{width: (!this.props.scaleLength) ? `${fretboardWidth}px` : "auto"}}>{this.generateNeck()}</div>
   }
 }
